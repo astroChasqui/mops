@@ -1,0 +1,77 @@
+<?php
+ob_start();
+session_start();
+extract($_SESSION);
+//print_r($_SESSION);
+?>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>MOPS plots: database setup</title>
+  <link href="main.css" rel="stylesheet" type="text/css" />
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300'
+        rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+  <?php include "db_setup.php";?>
+
+  <h1>MOPS plots: database setup</h1>
+
+  <p>
+    There are currently <?php echo $nlinks_in_db;?> links in the database. The last link listed in the database is <?php echo $last_link;?>.
+  </p>
+
+  <form method="POST">
+    <table>
+      <tr>
+        <td>Username</td>
+        <td>
+          <input type="text" name="username"
+                 value="<?php if (isset($username)) echo $username;?>">
+        </td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td>
+          <input type="password" name="password"
+                 value="<?php if (isset($password)) echo $password;?>">
+        </td>
+      </tr>
+      <tr>
+        <td>Directory to add</td>
+        <td>
+          <input type="text" name="directory"
+                 placeholder="e.g., 2013/201305/"
+                 value="<?php if (isset($directory)) echo $directory;?>">
+        </td>
+      </tr>
+    </table>
+    <input type="submit" name="db_setup" >
+  </form>
+
+  <?php
+    if (isset($username)) {
+      echo "<br />";
+      if (isset($nfiles)) {
+        echo $msg1;
+        echo "<div style='width:350px;height:300px;overflow:scroll;
+                          border:2px solid black;border-radius:5px;'>
+              $filelist
+              </div>";
+        echo "$nfiles files found.<br />";
+      }
+      echo $msg2;
+    }
+  ?>
+
+  <hr  />
+  <a href="index.html">Home</a>
+
+</body>
+
+</html>

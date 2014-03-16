@@ -1,0 +1,142 @@
+<?php
+ob_start();
+session_start();
+//print_r($_SESSION);
+?>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>MOPS plots</title>
+  <link href="main.css" rel="stylesheet" type="text/css" />
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300'
+        rel='stylesheet' type='text/css'>
+</head>
+
+<?php
+
+  include "database.php";
+
+  $url_root = "http://austral.as.utexas.edu/michael/observing/HJST/";
+
+  $paths = array();
+
+  if (isset($_POST["reset"])) {
+    $_SESSION = array();
+    session_destroy();
+    header("Location: ".$_SERVER['PHP_SELF']);
+  }
+
+  if ($_SESSION) {
+    //extract($_SESSION);
+    $star_name = $_SESSION["star_name"];
+    $paths = $_SESSION["paths"];
+    $files = $_SESSION["files"];
+  } else {
+    $star_name = "";
+  }
+  do if (isset($_POST["search"])) {
+    $_SESSION = array();
+    session_destroy();
+    session_start();
+    $star_name = $_POST["star_name"];
+    if ($star_name == "") {
+      $_SESSION = array();
+      session_destroy();
+      header("Location:".$_SERVER['PHP_SELF']);
+    }
+    $star_name = strtolower(str_replace(" ", "", $star_name));
+    $query = "SELECT * FROM main WHERE filename LIKE '%$star_name%'
+              ORDER BY path DESC";
+    $result = mysql_query($query);
+    $paths = $files = array();
+    while ($row = mysql_fetch_assoc($result)) {
+      $paths[] = $row["path"];
+      $files[] = $row["filename"];
+    }
+    $_SESSION["star_name"] = $star_name;
+    $_SESSION["paths"] = $paths;
+    $_SESSION["files"] = $files;
+    header("Location:".$_SERVER['PHP_SELF']);
+  } while(False);
+
+  if (isset($_POST["show_images"])) {
+    $show_images = $_POST["show_images"];
+    $paths_checked = array();
+    foreach ($paths as $path) {
+      if (in_array($path, $show_images)) {
+        $paths_checked[] = 1;
+      } else {
+        $paths_checked[] = 0;
+      }
+    }
+    $_SESSION["show_images"] = $show_images;
+    $_SESSION["paths_checked"] = $paths_checked;
+    header("Location:".$_SERVER['PHP_SELF']);
+  }
+
+?>
+
+<body>
+
+<h1>MOPS plots</h1>
+
+<form method="POST">
+  Star name:
+  <input type="text" name="star_name" placeholder="e.g., 18 Sco"
+         value="<?php echo $star_name;?>" />
+  <input type="submit" name="search" value="Search" />
+  <input type="submit" name="reset" value="Reset" />
+</form>
+
+<div id="images">
+
+  <form method="POST" id="images_list">
+    <?php
+      if (count($paths)) {
+        echo "<input type='submit' name='show' value='Show' hidden>";
+        echo "<input type='checkbox' name=show_images[]
+                     value='' checked hidden>";
+        foreach ($paths as $index => $path) {
+          $url = $url_root.$path;
+          $checked = "";
+          if (!isset($_SESSION["paths_checked"]))
+            $paths_checked = array(); else
+            $paths_checked = $_SESSION["paths_checked"];
+          if (count($paths_checked)) {
+            if ($paths_checked[$index]) $checked = "checked";
+          }
+          $pathx = str_replace(".jpg", "", $path);
+          echo "<label><input type='checkbox' name=show_images[]
+                 value=$path $checked onclick='submit();'/>
+                 $pathx</label><br />";
+          echo "<input type='text' name=paths[] value=$path hidden />";
+        }
+      }
+    ?>
+  </form>
+
+  <div id="images_plot">
+    <?php
+      if (isset($_SESSION["show_images"])) {
+        $show_images = $_SESSION["show_images"];
+        foreach ($show_images as $show_image) {
+          if ($show_image == "") continue;
+          $image = $url_root.$show_image;
+          echo "<b>$show_image</b><br />";
+          echo "<img src=\"$image\" style='width:450px;'/><br /><br />";
+        }
+      }
+    ?>
+  </div>
+  
+</div>
+
+<hr />
+<a href="db_setup.html">Database setup</a>
+
+</body>
+
+</html>
