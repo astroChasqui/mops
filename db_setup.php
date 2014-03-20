@@ -13,7 +13,7 @@
     $username = $_POST["username"];
     $password = $_POST["password"];
     $directory = $_POST["directory"];
-    if (substr($directory, -1) != "/") $directory .= "/";
+    if (substr($directory, -1) != "/" and $directory != "") $directory .= "/";
 
     $url_root = "http://austral.as.utexas.edu/michael/observing/HJST/";
     $url = $url_root.$directory;

@@ -83,6 +83,9 @@ session_start();
 
 <h1>MOPS plots</h1>
 
+<p>Note: before using this app, make sure you are logged in to
+<a href="http://austral.as.utexas.edu/michael/observing/HJST/" target="_blank">Mike's website</a>.</p>
+
 <form method="POST">
   Star name:
   <input type="text" name="star_name" placeholder="e.g., 18 Sco"
@@ -125,8 +128,10 @@ session_start();
         foreach ($show_images as $show_image) {
           if ($show_image == "") continue;
           $image = $url_root.$show_image;
-          echo "<b>$show_image</b><br />";
-          echo "<img src=\"$image\" style='width:450px;'/><br /><br />";
+          echo "<a href='$image' target='_blank'>
+                <b>$show_image</b><br />
+                <img src=\"$image\" style='width:450px;'/><br /><br />
+                </a>";
         }
       }
     ?>

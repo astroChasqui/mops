@@ -23,7 +23,7 @@ extract($_SESSION);
   <h1>MOPS plots: database setup</h1>
 
   <p>
-    There are currently <?php echo $nlinks_in_db;?> links in the database. The last link listed in the database is <?php echo $last_link;?>.
+    There are currently <?php echo $nlinks_in_db;?> links in the database.<br > The last link listed in the database is <?php echo $last_link;?>.
   </p>
 
   <form method="POST">
@@ -51,7 +51,7 @@ extract($_SESSION);
         </td>
       </tr>
     </table>
-    <input type="submit" name="db_setup" >
+    <input type="submit" name="db_setup" value="Update database">
   </form>
 
   <?php
