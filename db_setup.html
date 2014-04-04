@@ -20,7 +20,9 @@ extract($_SESSION);
 
   <?php include "db_setup.php";?>
 
-  <h1>MOPS plots: database setup</h1>
+  <div id="header">
+    <h1>MOPS plots: database setup</h1>
+  </div>
 
   <p>
     There are currently <?php echo $nlinks_in_db;?> links in the database.<br > The last link listed in the database is <?php echo $last_link;?>.
@@ -69,8 +71,14 @@ extract($_SESSION);
     }
   ?>
 
-  <hr  />
-  <a href="index.html">Home</a>
+  <div id="footer">
+    <div id="footer_left">
+      <a href="index.html">Back to MOPS plots</a>
+    </div>
+    <div id="footer_right">
+      <a href="http://www.astrochasqui.com">astroChasqui</a>
+    </div>
+  </div>
 
 </body>
 

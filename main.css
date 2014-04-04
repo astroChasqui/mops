@@ -7,7 +7,7 @@ h1 {
   color: blue;
 }
 a {
-  color: blue;
+  color: #0000CC;
   text-decoration: none;
 }
 a:hover {
@@ -38,5 +38,18 @@ label:hover {
 #images_plot {
   width: 500px;
   display: table-cell;
+}
+
+#footer, #header {
+  background: #FFFFCC;
+  margin: 10px 0 0 0;
+  padding: 5px;
+  border-radius: 5px;
+}
+#footer_left {
+  float: left;
+}
+#footer_right {
+  text-align: right;
 }
 

@@ -81,66 +81,74 @@ session_start();
 
 <body>
 
-<h1>MOPS plots</h1>
+  <div id="header">
+    <h1>MOPS plots</h1>
+  </div>
 
-<p>Note: before using this app, make sure you are logged in to
-<a href="http://austral.as.utexas.edu/michael/observing/HJST/" target="_blank">Mike's website</a>.</p>
+  <p>Note: before using this app, make sure you are logged in to
+  <a href="http://austral.as.utexas.edu/michael/observing/HJST/" target="_blank">Mike's website</a>.</p>
 
-<form method="POST">
-  Star name:
-  <input type="text" name="star_name" placeholder="e.g., 18 Sco"
-         value="<?php echo $star_name;?>" />
-  <input type="submit" name="search" value="Search" />
-  <input type="submit" name="reset" value="Reset" />
-</form>
-
-<div id="images">
-
-  <form method="POST" id="images_list">
-    <?php
-      if (count($paths)) {
-        echo "<input type='submit' name='show' value='Show' hidden>";
-        echo "<input type='checkbox' name=show_images[]
-                     value='' checked hidden>";
-        foreach ($paths as $index => $path) {
-          $url = $url_root.$path;
-          $checked = "";
-          if (!isset($_SESSION["paths_checked"]))
-            $paths_checked = array(); else
-            $paths_checked = $_SESSION["paths_checked"];
-          if (count($paths_checked)) {
-            if ($paths_checked[$index]) $checked = "checked";
-          }
-          $pathx = str_replace(".jpg", "", $path);
-          echo "<label><input type='checkbox' name=show_images[]
-                 value=$path $checked onclick='submit();'/>
-                 $pathx</label><br />";
-          echo "<input type='text' name=paths[] value=$path hidden />";
-        }
-      }
-    ?>
+  <form method="POST">
+    Star name:
+    <input type="text" name="star_name" placeholder="e.g., 18 Sco"
+           value="<?php echo $star_name;?>" />
+    <input type="submit" name="search" value="Search" />
+    <input type="submit" name="reset" value="Reset" />
   </form>
 
-  <div id="images_plot">
-    <?php
-      if (isset($_SESSION["show_images"])) {
-        $show_images = $_SESSION["show_images"];
-        foreach ($show_images as $show_image) {
-          if ($show_image == "") continue;
-          $image = $url_root.$show_image;
-          echo "<a href='$image' target='_blank'>
-                <b>$show_image</b><br />
-                <img src=\"$image\" style='width:450px;'/><br /><br />
-                </a>";
-        }
-      }
-    ?>
-  </div>
-  
-</div>
+  <div id="images">
 
-<hr />
-<a href="db_setup.html">Database setup</a>
+    <form method="POST" id="images_list">
+      <?php
+        if (count($paths)) {
+          echo "<input type='submit' name='show' value='Show' hidden>";
+          echo "<input type='checkbox' name=show_images[]
+                       value='' checked hidden>";
+          foreach ($paths as $index => $path) {
+            $url = $url_root.$path;
+            $checked = "";
+            if (!isset($_SESSION["paths_checked"]))
+              $paths_checked = array(); else
+              $paths_checked = $_SESSION["paths_checked"];
+            if (count($paths_checked)) {
+              if ($paths_checked[$index]) $checked = "checked";
+            }
+            $pathx = str_replace(".jpg", "", $path);
+            echo "<label><input type='checkbox' name=show_images[]
+                   value=$path $checked onclick='submit();'/>
+                   $pathx</label><br />";
+            echo "<input type='text' name=paths[] value=$path hidden />";
+          }
+        }
+      ?>
+    </form>
+
+    <div id="images_plot">
+      <?php
+        if (isset($_SESSION["show_images"])) {
+          $show_images = $_SESSION["show_images"];
+          foreach ($show_images as $show_image) {
+            if ($show_image == "") continue;
+            $image = $url_root.$show_image;
+            echo "<a href='$image' target='_blank'>
+                  <b>$show_image</b><br />
+                  <img src=\"$image\" style='width:450px;'/><br /><br />
+                  </a>";
+          }
+        }
+      ?>
+    </div>
+    
+  </div>
+
+  <div id="footer">
+    <div id="footer_left">
+      <a href="db_setup.html">Database setup</a>
+    </div>
+    <div id="footer_right">
+      <a href="http://www.astrochasqui.com">astroChasqui</a>
+    </div>
+  </div>
 
 </body>
 
