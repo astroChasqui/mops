@@ -14,6 +14,7 @@ extract($_SESSION);
   <link href="main.css" rel="stylesheet" type="text/css" />
   <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300'
         rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -61,8 +62,7 @@ extract($_SESSION);
       echo "<br />";
       if (isset($nfiles)) {
         echo $msg1;
-        echo "<div style='width:350px;height:300px;overflow:scroll;
-                          border:2px solid black;border-radius:5px;'>
+        echo "<div id='images_found'>
               $filelist
               </div>";
         echo "$nfiles files found.<br />";
@@ -76,7 +76,8 @@ extract($_SESSION);
       <a href="index.html">Back to MOPS plots</a>
     </div>
     <div id="footer_right">
-      <a href="http://www.astrochasqui.com">astroChasqui</a>
+      Problems/suggestions? Email
+      <a href="mailto:ivan@astro.as.utexas.edu">Ivan</a>
     </div>
   </div>
 

@@ -15,7 +15,7 @@
     $directory = $_POST["directory"];
     if (substr($directory, -1) != "/" and $directory != "") $directory .= "/";
 
-    $url_root = "http://austral.as.utexas.edu/michael/observing/HJST/";
+    $url_root = "http://www.as.utexas.edu/~mike/observing/HJST/";
     $url = $url_root.$directory;
     $_SESSION["msg1"] = "Looking for jpg images in:<br />$url<br />";
     $ch = curl_init();
