@@ -98,30 +98,30 @@ session_start();
 
   <div id="images">
 
-    <form method="POST" id="images_list">
-      <?php
-        if (count($paths)) {
-          echo "<input type='submit' name='show' value='Show' hidden>";
-          echo "<input type='checkbox' name=show_images[]
-                       value='' checked hidden>";
-          foreach ($paths as $index => $path) {
-            $url = $url_root.$path;
-            $checked = "";
-            if (!isset($_SESSION["paths_checked"]))
-              $paths_checked = array(); else
-              $paths_checked = $_SESSION["paths_checked"];
-            if (count($paths_checked)) {
-              if ($paths_checked[$index]) $checked = "checked";
-            }
-            $pathx = str_replace(".jpg", "", $path);
-            echo "<label><input type='checkbox' name=show_images[]
-                   value=$path $checked onclick='submit();'/>
-                   $pathx</label><br />";
-            echo "<input type='text' name=paths[] value=$path hidden />";
+    <?php
+      if (count($paths)) {
+        echo "<form method='POST' id='images_list'>";
+        echo "<input type='submit' name='show' value='Show' hidden>";
+        echo "<input type='checkbox' name=show_images[]
+                     value='' checked hidden>";
+        foreach ($paths as $index => $path) {
+          $url = $url_root.$path;
+          $checked = "";
+          if (!isset($_SESSION["paths_checked"]))
+            $paths_checked = array(); else
+            $paths_checked = $_SESSION["paths_checked"];
+          if (count($paths_checked)) {
+            if ($paths_checked[$index]) $checked = "checked";
           }
+          $pathx = str_replace(".jpg", "", $path);
+          echo "<label><input type='checkbox' name=show_images[]
+                 value=$path $checked onclick='submit();'/>
+                 $pathx</label><br />";
+          echo "<input type='text' name=paths[] value=$path hidden />";
         }
-      ?>
-    </form>
+        echo "</form>";
+      }
+    ?>
 
     <div id="images_plot">
       <?php
